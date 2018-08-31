@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>Paypal Link Builder</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+</head>
+<body>
+
+<div id="app" class="container">
+    <h1>Paypal Link Builder</h1>
+
+    <div class="row">
+        <div class="column">
+            <form>
+                <fieldset>
+
+                    <label for="business">Your Paypal Account E-Mail Address</label>
+                    <input type="email" id="business" v-model.trim="business" placeholder="you@example.com">
+
+
+                    <label for="currency">The currency you want to use</label>
+                    <select id="currency" v-model="currency">
+                        <option value="EUR">EUR</option>
+                        <option value="USD">USD</option>
+                    </select>
+
+
+                    <label for="amount">The Amount to request</label>
+                    <input id="amount" v-model.number="amount" type="number" placeholder="99.99" min="0"
+                           step="0.01">
+
+
+                    <label for="item_name">The Description</label>
+                    <input id="item_name" v-model.trim="item_name" type="text" placeholder="My exquisite services">
+
+
+                    <label>Subscription Options</label>
+                    Every <input type="number" step="1" min="1" v-model.number="each">
+                    <select v-model="unit">
+                        <option value="D">Day</option>
+                        <option value="W">Week</option>
+                        <option value="M">Month</option>
+                        <option value="Y">Year</option>
+                    </select>
+
+                </fieldset>
+            </form>
+
+            <div v-if="business && amount && item_name">
+                <h2>Results</h2>
+
+                <p>
+                    Right-click and copy the link to use it somewhere or us the TinyURL servive to make the link a bit
+                    shorter.
+                </p>
+                <ul>
+                    <li>
+                        <strong><a v-bind:href="buylink">Buy Once</a></strong>
+                        for {{ amount }} {{ currency }}
+                        <tinyurl v-bind:url="buylink"></tinyurl>
+                    </li>
+                    <li>
+                        <strong><a v-bind:href="sublink">Subscription</a></strong>
+                        for {{ amount }} {{ currency }} every {{ each }} {{ unit }}
+                        <tinyurl v-bind:url="sublink"></tinyurl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>About</h2>
+
+            <p>
+                This tool builds Paypal Links for you. Either for a one-time buy or a subscription.
+            </p>
+
+            <p>
+                I made this because Paypal's own methods for building these links are harder to find every
+                year. This tool is entirely in JavaScript, none of your data is transferred anywhere (unless you use the
+                TinyURL link).
+            </p>
+
+            <p>
+                You need to make sure your data makes sense yourself. Also check that the generated links do what you
+                want. <strong>Absolutely no warranties are given. Use at your own risk.</strong>
+            </p>
+
+            <p>
+                A <a href="https://www.splitbrain.org">splitbrain.org</a> Service.
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="script.js"></script>
+
+</html>
